@@ -25,14 +25,37 @@ def achaConta(_id):
 def printaConta(_id):
   pos = achaConta(_id)
   if(pos==-1):
-    return "Contra não encontrada"
+    return "Conta não encontrada"
   else:
     return "id = " + id[pos] + " saldo = " + str(saldo[pos]) + " nome = " + nome[pos]
+
+def getNome(_id):
+  pos = achaConta(_id)
+  if(pos==-1):
+    return "Conta não encontrada"
+  else:
+    return nome[pos]
+  return
+
+def setNome(_id,_nome):
+  pos = achaConta(_id)
+  if(pos==-1):
+    return "Conta não encontrada"
+  else:
+    nome[pos] = _nome
+    return "nome da conta " + id[pos] + " alterado para " + nome[pos]
+
   
 def test_cria():
   criaConta('1')
   assert printaConta('1') == "id = 1 saldo = 0 nome = "
 
+def test_setNome():
+  criaConta('2')
+  assert setNome('2','joão') == "nome da conta 2 alterado para joão"
+
+def get_nome():
+  return
 id = []
 saldo = []
 nome = []
@@ -43,8 +66,6 @@ def main():
   printaTodas()
   print(achaConta('4'))
   print(printaConta('4'))
-  test_cria()
 
 if __name__ == "__main__":
     main()
-
