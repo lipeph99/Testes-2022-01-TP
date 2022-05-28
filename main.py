@@ -119,7 +119,7 @@ def saque(_id, valor):
 def transferencia(_idOrigem, _idDestino, valor):
     origem = achaConta(_idOrigem)
     destino = achaConta(_idDestino)
-    if(pos == -1):
+    if(origem == -1 | | destino == -1):
         return "Conta não encontrada"
 
     if(saldo[origem] < valor):
