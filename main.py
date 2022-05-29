@@ -184,7 +184,7 @@ def test_deletaContaErrada():
     assert deletaConta('2') == "Conta não encontrada"
     deletaConta('1')
 
-def test_deletaContaErrada():
+def test_deletaContaComSaldo():
     criaConta('1')
     adicionaSaldo('1',10)
     assert deletaConta('1') == "Conta ainda tem saldo"
@@ -233,6 +233,7 @@ def testHub():
     test_setCPRFErrado()
     test_deletaContaOK()
     test_deletaContaErrada()
+    test_deletaContaComSaldo()
     test_setSaldoOK()
     test_setSaldoErrado()
     test_saqueOK()
