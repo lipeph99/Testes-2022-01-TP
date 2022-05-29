@@ -3,14 +3,14 @@ from banco import Banco
 def test_criaRepetido():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
-    assert banco.criaConta('1') == "Já existe uma conta com esse id"
+    assert banco.criaConta('1', 1000, 'Bruna', '123456') == "Já existe uma conta com esse id"
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
 def test_criaOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
-    assert banco.printaConta('1') == "id = 1 saldo = 0 saldo = 1000 nome = Bruna"
+    assert banco.printaConta('1') == "id: 1 | saldo: 1000 | nome: Bruna"
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
@@ -94,8 +94,8 @@ def test_deletaContaComSaldo():
 
 def test_setSaldoOK():
     banco = Banco()
-    banco.criaConta('1', 1000, 'Bruna', '123456')
-    assert banco.adicionaSaldo('1', 30) == "O valor do saldo é: 30"
+    banco.criaConta('1', 0, 'Bruna', '123456')
+    assert banco.adicionaSaldo('1', 30) == "Saldo adicionado com sucesso!"
     banco.saque('1', 970)
     banco.deletaConta('1')
 

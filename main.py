@@ -1,3 +1,4 @@
+import time
 from tests import testHub 
 from banco import Banco
 

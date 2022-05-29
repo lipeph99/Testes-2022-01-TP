@@ -45,7 +45,7 @@ class Banco:
         if(pos == -1):
             return "Conta não encontrada"
         else:
-            return "id = " + self.contas[pos].id + " saldo = " + str(self.contas[pos].saldo ) + " nome = " + self.contas[pos].nome
+            return "id: " + self.contas[pos].id + " | saldo: " + str(self.contas[pos].saldo) + " | nome: " + self.contas[pos].nome
 
     def getNome(self, _id):
         pos = self.achaConta(_id)
@@ -108,7 +108,7 @@ class Banco:
             if(self.contas[pos].saldo < valor):
                 return "Valor para saque excede saldo na conta!"
             self.contas[pos].saldo = self.contas[pos].saldo - valor
-            return "Saque de " + str(valor) + "reais realizado com sucesso!"
+            return "Saque de " + str(valor) + " reais realizado com sucesso!"
 
 
     def transferencia(self, _idOrigem, _idDestino, valor):
@@ -118,12 +118,12 @@ class Banco:
         destino = self.achaConta(_idDestino)
         if(destino == -1):
             return "Conta de destino não encontrada"
-        if(self.contas[_idOrigem].saldo < valor):
+        if(self.contas[int(_idOrigem)].saldo < valor):
             return "Valor para transferência excede saldo na conta!"
 
-        self.contas[_idOrigem].saldo = self.contas[_idOrigem].saldo - valor
-        self.contas[_idDestino].saldo = self.contas[_idDestino].saldo + valor
-        return "Transferência de " + str(valor) + " a realizada da conta " + str(idOrigem) + " para a conta " + str(idDestino)
+        self.contas[int(_idOrigem) - 1].saldo = self.contas[int(_idOrigem) -1].saldo - valor
+        self.contas[int(_idDestino)-1].saldo = self.contas[int(_idDestino)-1].saldo + valor
+        return "Transferência de " + str(valor) + " a realizada da conta " + str(_idOrigem) + " para a conta " + str(_idDestino)
 
 class Conta:
     def __init__(self, id, saldo, nome, cpf):
