@@ -49,13 +49,13 @@ def main():
             _id = input()
             print("Digite o valor")
             _saldo = int(input())
-            print(adicionaSaldo(_id,_saldo))
+            print(banco.adicionaSaldo(_id,_saldo))
         elif(menu==5):
             print("Digite um identificador para a conta que deseja sacar")
             _id = input()
             print("Digite o valor")
             _saldo = int(input())
-            print(saque(_id,_saldo))
+            print(banco.saque(_id,_saldo))
         elif(menu==6):
             print("Digite um identificador para a conta de origem")
             _id = input()
@@ -63,29 +63,29 @@ def main():
             _id2 = input()
             print("Digite o valor")
             _saldo = int(input())
-            print(transferencia(_id,_id2,_saldo))
+            print(banco.transferencia(_id,_id2,_saldo))
         elif(menu==7):
-            print(printaTodas())
+            print(banco.printaTodas())
         elif(menu==8):
             print("Digite um identificador para a conta que deseja ver nome")
             _id = input()
-            print(getNome(_id))
+            print(banco.getNome(_id))
         elif(menu==9):
             print("Digite um identificador para a conta que deseja ver CPF")
             _id = input()
-            print(getCPF(_id))
+            print(banco.getCPF(_id))
         elif(menu==10):
             print("Digite um identificador para a conta que deseja ver saldo")
             _id = input()
-            print(getSaldo(_id))
+            print(banco.getSaldo(_id))
         elif(menu==11):
             print("Digite um identificador para a conta que deseja deletar")
             _id = input()
-            print(deletaConta(_id))
+            print(banco.deletaConta(_id))
         elif(menu==12):
             print("Digite um identificador para a conta que deseja ver")
             _id = input()
-            print(printaConta(_id))
+            print(banco.printaConta(_id))
         time.sleep(1)
 
 
