@@ -1,5 +1,8 @@
 from banco import Banco
 
+"""
+Testes Criação do Banco
+"""
 def test_criaRepetido():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
@@ -14,6 +17,9 @@ def test_criaOK():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+"""
+Testes Identificar Conta
+"""
 def test_achaContaOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
@@ -30,6 +36,9 @@ def test_achaContaErro():
     banco.deletaConta('1')
     return
 
+"""
+Testes Nome 
+"""
 def test_getNomeOk():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
@@ -58,6 +67,9 @@ def test_setNomeErrado():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+"""
+Testes CPF
+"""
 def test_setCPFOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
@@ -72,6 +84,9 @@ def test_setCPRFErrado():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+"""
+Testes Deletar Conta
+"""
 def test_deletaContaOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
@@ -92,6 +107,9 @@ def test_deletaContaComSaldo():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+"""
+Testes Saldo
+"""
 def test_setSaldoOK():
     banco = Banco()
     banco.criaConta('1', 0, 'Bruna', '123456')
@@ -106,6 +124,9 @@ def test_setSaldoErrado():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+"""
+Testes Saque
+"""
 def test_saqueOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
@@ -113,6 +134,9 @@ def test_saqueOK():
     banco.saque('1', 950)
     banco.deletaConta('1')
 
+"""
+Testes Transferência
+"""
 def test_transferenciaOK():
     banco = Banco()
     banco.criaConta('1', 0, 'Bruna', '123456')
@@ -126,6 +150,10 @@ def test_transferenciaOK():
     banco.deletaConta('1')
     banco.deletaConta('2')
 
+
+"""
+HUB
+"""
 def testHub():
     test_criaRepetido()
     test_criaOK()
