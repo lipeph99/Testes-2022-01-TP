@@ -1,14 +1,19 @@
+# -*- coding: utf-8 -*-
 from banco import Banco
 
 """
 Testes Criação do Banco
 """
+
+
 def test_criaRepetido():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
-    assert banco.criaConta('1', 1000, 'Bruna', '123456') == "Já existe uma conta com esse id"
+    assert banco.criaConta(
+        '1', 1000, 'Bruna', '123456') == "Já existe uma conta com esse id"
     banco.saque('1', 1000)
     banco.deletaConta('1')
+
 
 def test_criaOK():
     banco = Banco()
@@ -17,9 +22,12 @@ def test_criaOK():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+
 """
 Testes Identificar Conta
 """
+
+
 def test_achaContaOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
@@ -27,6 +35,7 @@ def test_achaContaOK():
     banco.saque('1', 1000)
     banco.deletaConta('1')
     return
+
 
 def test_achaContaErro():
     banco = Banco()
@@ -36,15 +45,19 @@ def test_achaContaErro():
     banco.deletaConta('1')
     return
 
+
 """
 Testes Nome 
 """
+
+
 def test_getNomeOk():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.getNome('1') == "nome: Bruna"
     banco.saque('1', 1000)
     banco.deletaConta('1')
+
 
 def test_getNomeErrado():
     banco = Banco()
@@ -53,12 +66,14 @@ def test_getNomeErrado():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+
 def test_setNomeOk():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.setNome('1', 'joão') == "nome da conta 1 alterado para joão"
     banco.saque('1', 1000)
     banco.deletaConta('1')
+
 
 def test_setNomeErrado():
     banco = Banco()
@@ -67,15 +82,20 @@ def test_setNomeErrado():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+
 """
 Testes CPF
 """
+
+
 def test_setCPFOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
-    assert banco.setCPF('1', '09198745689') == "CPF da conta 1 alterado para 09198745689"
+    assert banco.setCPF(
+        '1', '09198745689') == "CPF da conta 1 alterado para 09198745689"
     banco.saque('1', 1000)
     banco.deletaConta('1')
+
 
 def test_setCPRFErrado():
     banco = Banco()
@@ -84,14 +104,18 @@ def test_setCPRFErrado():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+
 """
 Testes Deletar Conta
 """
+
+
 def test_deletaContaOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     banco.saque('1', 1000)
     assert banco.deletaConta('1') == "conta 1 deletada"
+
 
 def test_deletaContaErrada():
     banco = Banco()
@@ -100,6 +124,7 @@ def test_deletaContaErrada():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+
 def test_deletaContaComSaldo():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
@@ -107,15 +132,19 @@ def test_deletaContaComSaldo():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+
 """
 Testes Saldo
 """
+
+
 def test_setSaldoOK():
     banco = Banco()
     banco.criaConta('1', 0, 'Bruna', '123456')
     assert banco.adicionaSaldo('1', 30) == "Saldo adicionado com sucesso!"
     banco.saque('1', 970)
     banco.deletaConta('1')
+
 
 def test_setSaldoErrado():
     banco = Banco()
@@ -124,9 +153,12 @@ def test_setSaldoErrado():
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
+
 """
 Testes Saque
 """
+
+
 def test_saqueOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
@@ -134,9 +166,33 @@ def test_saqueOK():
     banco.saque('1', 950)
     banco.deletaConta('1')
 
+
+def test_saqueValorExcedente():
+    banco = Banco()
+    banco.criaConta('1', 200, 'Luis', '456789')
+    assert banco.saque('1', 300) == "Valor para saque excede saldo na conta!"
+    banco.deletaConta('1')
+
+
+def test_saqueValorNegativo():
+    banco = Banco()
+    banco.criaConta('1', 200, 'luis', '123456')
+    assert banco.saque('1', -30) == "Valor inválido para saque!"
+    banco.deletaConta('1')
+
+
+def test_saqueZeroReais():
+    banco = Banco()
+    banco.criaConta('1', 300, 'luis', '132456')
+    assert banco.saque('1', 0) == "Valor inválido para saque!"
+    banco.deletaConta('1')
+
+
 """
 Testes Transferência
 """
+
+
 def test_transferenciaOK():
     banco = Banco()
     banco.criaConta('1', 0, 'Bruna', '123456')
@@ -145,34 +201,62 @@ def test_transferenciaOK():
     banco.adicionaSaldo('2', 30)
     banco.transferencia('1', '2', 30)
     assert banco.getSaldo('2') == "O valor do saldo é: 60"
-    banco.saque('1',30)
-    banco.saque('2',60)
+    banco.saque('1', 30)
+    banco.saque('2', 60)
     banco.deletaConta('1')
     banco.deletaConta('2')
+
 
 def test_transferenciaSemContaOrigem():
     banco = Banco()
     banco.criaConta('1', 0, 'Bruna', '123456')
     banco.adicionaSaldo('1', 60)
-    assert  banco.transferencia('3', '1', 30) == "Conta de origem não encontrada"
-    banco.saque('1',60)
+    assert banco.transferencia(
+        '3', '1', 30) == "Conta de origem não encontrada"
+    banco.saque('1', 60)
     banco.deletaConta('1')
+
 
 def test_transferenciaSemContaDestino():
     banco = Banco()
     banco.criaConta('1', 0, 'Bruna', '123456')
     banco.adicionaSaldo('1', 60)
-    assert  banco.transferencia('1', '3', 30) == "Conta de destino não encontrada"
+    assert banco.transferencia(
+        '1', '3', 30) == "Conta de destino não encontrada"
     banco.saque('1', 60)
     banco.deletaConta('1')
+
 
 def test_transferenciaExcedeSaldo():
     banco = Banco()
     banco.criaConta('1', 0, 'Bruna', '123456')
     banco.criaConta('2', 0, 'João', '123456123')
     banco.adicionaSaldo('1', 60)
-    assert  banco.transferencia('1', '2', 120) == "Valor para transferência excede saldo na conta!"
-    banco.saque('1',60)
+    assert banco.transferencia(
+        '1', '2', 120) == "Valor para transferência excede saldo na conta!"
+    banco.saque('1', 60)
+    banco.deletaConta('1')
+    banco.deletaConta('2')
+
+
+def test_transferenciaValorNegativo():
+    banco = Banco()
+    banco.criaConta('1', 110, 'Bruna', '123456')
+    banco.criaConta('2', 220, 'João', '123456123')
+    banco.adicionaSaldo('1', 60)
+    assert banco.transferencia(
+        '1', '2', -30) == "Valor inválido para transferência!"
+    banco.deletaConta('1')
+    banco.deletaConta('2')
+
+
+def test_transferenciaValorZerado():
+    banco = Banco()
+    banco.criaConta('1', 110, 'Bruna', '123456')
+    banco.criaConta('2', 220, 'João', '123456123')
+    banco.adicionaSaldo('1', 60)
+    assert banco.transferencia(
+        '1', '2', 0) == "Valor inválido para transferência!"
     banco.deletaConta('1')
     banco.deletaConta('2')
 
@@ -180,6 +264,8 @@ def test_transferenciaExcedeSaldo():
 """
 Testes Idade
 """
+
+
 def test_getIdadeOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
@@ -187,11 +273,13 @@ def test_getIdadeOK():
     assert banco.getIdade('1') == 20
     banco.deletaConta('1')
 
+
 def test_getIdadeContaNaoEncontrada():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.getIdade('2') == "Conta não encontrada"
     banco.deletaConta('1')
+
 
 def test_setIdadeOK():
     banco = Banco()
@@ -199,17 +287,20 @@ def test_setIdadeOK():
     assert banco.setIdade('1', 20) == "Idade da conta 1 definida como 20"
     banco.deletaConta('1')
 
+
 def test_setIdadeContaNaoEncontrada():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.setIdade('2', 20) == "Conta não encontrada"
     banco.deletaConta('1')
 
+
 def test_setIdadeNumeroInvalido():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.setIdade('1', -20) == "Número inválido"
     banco.deletaConta('1')
+
 
 def test_setIdadeMenorDeIdade():
     banco = Banco()
@@ -221,31 +312,62 @@ def test_setIdadeMenorDeIdade():
 """
 Testes Printar Conta
 """
+
+
 def test_printaContaOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.printaConta('1') == "id: 1 | saldo: 1000 | nome: Bruna"
     banco.deletaConta('1')
 
+
 def test_printaContaNaoEncontrada():
     banco = Banco()
     assert banco.printaConta('2') == "Conta não encontrada"
 
+
 """
 Testes Printar Todas as contas
 """
+
+
 def test_printaContasBancoSemContas():
     banco = Banco()
     assert banco.printaTodasContas() == "Esse banco ainda não possui contas"
+
 
 def test_printaContasOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.printaTodasContas() == "id: 1 nome: Bruna CPF: 123456 saldo: 1000"
     banco.deletaConta('1')
+
+
+def test_deletaECriaContaMesmoId():
+    banco = Banco()
+    banco.criaConta('1', 100, 'Luis', '123456')
+    banco.deletaConta('1')
+    banco.criaConta('1', 200, 'Teste', '13245')
+    assert banco.printaTodasContas() == "id: 1 nome: Teste CPF: 13245 saldo: 200"
+    banco.deletaConta('1')
+
+
+def test_deletaTodasContasEPrinta():
+    banco = Banco()
+    banco.criaConta('1', 200, 'luis', '123456')
+    banco.criaConta('2', 300, 'Clarisse', '321456')
+    banco.criaConta('3', 4500, 'Carlos', '456789')
+    banco.deletaConta('1')
+    banco.deletaConta('2')
+    banco.deletaConta('3')
+    assert banco.printaTodasContas() == "Esse banco ainda não possui contas"
+
+
 """
 HUB
 """
+
+
 def testHub():
     test_criaRepetido()
     test_criaOK()
