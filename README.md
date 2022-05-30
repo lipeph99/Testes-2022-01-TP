@@ -23,7 +23,15 @@ O sistema desenvolvido é voltado para uma simulação de um banco digital, capa
 9. Ver CPF da conta
 10. Ver saldo
 11. Deletar conta
-12. Ver info da conta
+12. Ver info da conta 
+Entre outros.
+
+## Para executar
+O sistema pode ser executado no terminal do projeto com o comando:
+``` python main.py ```
+
+Para rodar os testes localmente, pode-se digitar o comando:
+``` pytest tests.py ```
 
 ## Tecnologias utilizadas
 1. Python - Base do projeto desenvolvida em python, sem interface gráfica.
