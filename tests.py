@@ -8,6 +8,11 @@ def test_criarContaIdJaExistente():
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.criaConta('1', 1000, 'Bruna', '123456') == "Já existe uma conta com esse id"
 
+def test_criarContaCPFJaExistente():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.criaConta('2', 1000, 'Bruna', '123456') == "Já existe uma conta com esse cpf"
+
 def test_criaOK():
     banco = Banco()
     assert banco.criaConta('1', 1000, 'Bruna', '123456') == "Conta criada"
@@ -34,21 +39,33 @@ def test_criarContaCPFInvalido():
 """
 Testes Identificar Conta
 """
-def test_achaContaOK():
+def test_encontrarContaPorIdOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
-    assert banco.achaConta('1') == 0
+    assert banco.encontrarContaPorId('1') == 0
     banco.saque('1', 1000)
     banco.deletaConta('1')
-    return
 
-def test_achaContaErro():
+def test_encontrarContaPorIdErro():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
-    assert banco.achaConta('2') == -1
+    assert banco.encontrarContaPorId('2') == -1
     banco.saque('1', 1000)
     banco.deletaConta('1')
-    return
+
+def test_encontrarContaPorCPFErro():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.encontrarContaPorCPF('123') == -1
+    banco.saque('1', 1000)
+    banco.deletaConta('1')
+
+def test_encontrarContaPorCPFOK():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.encontrarContaPorCPF('123456') == 0
+    banco.saque('1', 1000)
+    banco.deletaConta('1')
 
 """
 Testes Nome 
@@ -289,8 +306,8 @@ def testHub():
     test_criarContaCPFVazio()
     test_criarContaNomeVazio()
     test_criarContaSaldoInicialInvalido()
-    test_achaContaOK()
-    test_achaContaErro()
+    test_encontrarContaPorIdOK()
+    test_encontrarContaPorIdErro()
     test_getNomeOk()
     test_getNomeErrado()
     test_setNomeOk()
@@ -320,4 +337,7 @@ def testHub():
     test_printaContasOK()
     test_saqueContaNaoEncontrada()
     test_saqueValorExcedeSaldo()
+    test_encontrarContaPorCPFErro()
+    test_encontrarContaPorCPFOK()
+
     
