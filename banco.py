@@ -110,7 +110,6 @@ class Banco:
             self.contas[pos].saldo = self.contas[pos].saldo - valor
             return "Saque de " + str(valor) + " reais realizado com sucesso!"
 
-
     def transferencia(self, _idOrigem, _idDestino, valor):
         origem = self.achaConta(_idOrigem)
         if(origem == -1):
@@ -124,6 +123,23 @@ class Banco:
         self.contas[int(_idOrigem) - 1].saldo = self.contas[int(_idOrigem) -1].saldo - valor
         self.contas[int(_idDestino)-1].saldo = self.contas[int(_idDestino)-1].saldo + valor
         return "Transferência de " + str(valor) + " a realizada da conta " + str(_idOrigem) + " para a conta " + str(_idDestino)
+
+    def getIdade(self, _id):
+        pos = self.achaConta(_id)
+        if(pos == -1):
+            return "Conta não encontrada"
+        return self.contas[pos].idade
+        
+    def setIdade(self, _id, _idade):
+        pos = self.achaConta(_id)
+        if(pos == -1):
+            return "Conta não encontrada"
+        if(_idade<0):
+            return "Número inválido"
+        if(_idade<18):
+            return "Contas apenas para maiores"
+        self.contas[pos].idade = _idade
+        return "Idade da conta " + self.contas[pos].id + "definida como " + self.contas[pos].idade
 
 class Conta:
     def __init__(self, id, saldo, nome, cpf):

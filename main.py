@@ -6,7 +6,7 @@ def main():
     testHub()
     menu = 1
     banco = Banco()
-    while(menu>0 and menu<13):
+    while(menu>0 and menu<15):
         print("Controle de contas bancárias:")
         print("")
         print("1 - Criar conta nova")
@@ -21,6 +21,8 @@ def main():
         print("10- Ver Saldo")
         print("11- Deleta conta")
         print("12- Ver infos da conta")
+        print("13- Definir idade")
+        print("14- Ver idade")
         menu = int(input())
         if (menu==1):
             print("Digite um identificador para sua conta")
@@ -86,6 +88,16 @@ def main():
             print("Digite um identificador para a conta que deseja ver")
             _id = input()
             print(banco.printaConta(_id))
+        elif(menu==13):
+            print("Digite um identificador para a conta que deseja trocar a idade")
+            _id = input()
+            print("Digite uma idade para a conta")
+            _idade = input()
+            print(banco.setIdade(_id,_idade))
+        elif(menu==14):
+            print("Digite um identificador para a conta que deseja ver a idade")
+            _id = input()
+            print(banco.setIdade(_id))
         time.sleep(1)
 
 
