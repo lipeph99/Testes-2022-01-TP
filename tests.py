@@ -6,21 +6,48 @@ Testes Criação do Banco
 """
 
 
-def test_criaRepetido():
+def test_criarContaIdJaExistente():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.criaConta(
         '1', 1000, 'Bruna', '123456') == "Já existe uma conta com esse id"
-    banco.saque('1', 1000)
-    banco.deletaConta('1')
+
+
+def test_criarContaCPFJaExistente():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.criaConta(
+        '2', 1000, 'Bruna', '123456') == "Já existe uma conta com esse cpf"
 
 
 def test_criaOK():
     banco = Banco()
-    banco.criaConta('1', 1000, 'Bruna', '123456')
-    assert banco.printaConta('1') == "id: 1 | saldo: 1000 | nome: Bruna"
+    assert banco.criaConta('1', 1000, 'Bruna', '123456') == "Conta criada"
     banco.saque('1', 1000)
     banco.deletaConta('1')
+
+
+def test_criarContaSaldoInicialInvalido():
+    banco = Banco()
+    assert banco.criaConta(
+        '1', -100, 'Bruna', '123456') == "Saldo inicial inválido"
+
+
+def test_criarContaNomeVazio():
+    banco = Banco()
+    assert banco.criaConta(
+        '1', 1000, '', '123456') == "Nome não pode estar vazio"
+
+
+def test_criarContaCPFVazio():
+    banco = Banco()
+    assert banco.criaConta('1', 100, 'Bruna', '') == "CPF inválido"
+
+
+def test_criarContaCPFInvalido():
+    banco = Banco()
+    assert banco.criaConta(
+        '1', 100, 'Bruna', '1234567891011') == "CPF inválido"
 
 
 """
@@ -28,22 +55,36 @@ Testes Identificar Conta
 """
 
 
-def test_achaContaOK():
+def test_encontrarContaPorIdOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
-    assert banco.achaConta('1') == 0
+    assert banco.encontrarContaPorId('1') == 0
     banco.saque('1', 1000)
     banco.deletaConta('1')
-    return
 
 
-def test_achaContaErro():
+def test_encontrarContaPorIdErro():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
-    assert banco.achaConta('2') == -1
+    assert banco.encontrarContaPorId('2') == -1
     banco.saque('1', 1000)
     banco.deletaConta('1')
-    return
+
+
+def test_encontrarContaPorCPFErro():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.encontrarContaPorCPF('123') == -1
+    banco.saque('1', 1000)
+    banco.deletaConta('1')
+
+
+def test_encontrarContaPorCPFOK():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.encontrarContaPorCPF('123456') == 0
+    banco.saque('1', 1000)
+    banco.deletaConta('1')
 
 
 """
@@ -134,11 +175,11 @@ def test_deletaContaComSaldo():
 
 
 """
-Testes Saldo
+Testes Depositar
 """
 
 
-def test_setSaldoOK():
+def test_adicionaSaldoOK():
     banco = Banco()
     banco.criaConta('1', 0, 'Bruna', '123456')
     assert banco.adicionaSaldo('1', 30) == "Saldo adicionado com sucesso!"
@@ -146,10 +187,18 @@ def test_setSaldoOK():
     banco.deletaConta('1')
 
 
-def test_setSaldoErrado():
+def test_adicionaSaldoContaNaoEncontrada():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.adicionaSaldo('2', 30) == "Conta não encontrada"
+    banco.saque('1', 1000)
+    banco.deletaConta('1')
+
+
+def test_adicionaSaldoValorInvalido():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.adicionaSaldo('1', -30) == "Valor inválido!"
     banco.saque('1', 1000)
     banco.deletaConta('1')
 
@@ -167,24 +216,19 @@ def test_saqueOK():
     banco.deletaConta('1')
 
 
-def test_saqueValorExcedente():
+def test_saqueContaNaoEncontrada():
     banco = Banco()
-    banco.criaConta('1', 200, 'Luis', '456789')
-    assert banco.saque('1', 300) == "Valor para saque excede saldo na conta!"
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.saque('2', 50) == "Conta não encontrada"
+    banco.saque('1', 1000)
     banco.deletaConta('1')
 
 
-def test_saqueValorNegativo():
+def test_saqueValorExcedeSaldo():
     banco = Banco()
-    banco.criaConta('1', 200, 'luis', '123456')
-    assert banco.saque('1', -30) == "Valor inválido para saque!"
-    banco.deletaConta('1')
-
-
-def test_saqueZeroReais():
-    banco = Banco()
-    banco.criaConta('1', 300, 'luis', '132456')
-    assert banco.saque('1', 0) == "Valor inválido para saque!"
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.saque('1', 2000) == "Valor para saque excede saldo na conta!"
+    banco.saque('1', 1000)
     banco.deletaConta('1')
 
 
@@ -343,36 +387,20 @@ def test_printaContasOK():
     banco.deletaConta('1')
 
 
-def test_deletaECriaContaMesmoId():
-    banco = Banco()
-    banco.criaConta('1', 100, 'Luis', '123456')
-    banco.deletaConta('1')
-    banco.criaConta('1', 200, 'Teste', '13245')
-    assert banco.printaTodasContas() == "id: 1 nome: Teste CPF: 13245 saldo: 200"
-    banco.deletaConta('1')
-
-
-def test_deletaTodasContasEPrinta():
-    banco = Banco()
-    banco.criaConta('1', 200, 'luis', '123456')
-    banco.criaConta('2', 300, 'Clarisse', '321456')
-    banco.criaConta('3', 4500, 'Carlos', '456789')
-    banco.deletaConta('1')
-    banco.deletaConta('2')
-    banco.deletaConta('3')
-    assert banco.printaTodasContas() == "Esse banco ainda não possui contas"
-
-
 """
 HUB
 """
 
 
 def testHub():
-    test_criaRepetido()
+    test_criarContaIdJaExistente()
     test_criaOK()
-    test_achaContaOK()
-    test_achaContaErro()
+    test_criarContaCPFInvalido()
+    test_criarContaCPFVazio()
+    test_criarContaNomeVazio()
+    test_criarContaSaldoInicialInvalido()
+    test_encontrarContaPorIdOK()
+    test_encontrarContaPorIdErro()
     test_getNomeOk()
     test_getNomeErrado()
     test_setNomeOk()
@@ -382,13 +410,16 @@ def testHub():
     test_deletaContaOK()
     test_deletaContaErrada()
     test_deletaContaComSaldo()
-    test_setSaldoOK()
-    test_setSaldoErrado()
+    test_adicionaSaldoOK()
+    test_adicionaSaldoContaNaoEncontrada()
+    test_adicionaSaldoValorInvalido()
     test_saqueOK()
     test_transferenciaOK()
     test_transferenciaSemContaOrigem()
     test_transferenciaSemContaDestino()
     test_transferenciaExcedeSaldo()
+    test_transferenciaValorNegativo()
+    test_transferenciaValorZerado()
     test_getIdadeOK()
     test_getIdadeContaNaoEncontrada()
     test_setIdadeOK()
@@ -399,3 +430,7 @@ def testHub():
     test_printaContaOK()
     test_printaContasBancoSemContas()
     test_printaContasOK()
+    test_saqueContaNaoEncontrada()
+    test_saqueValorExcedeSaldo()
+    test_encontrarContaPorCPFErro()
+    test_encontrarContaPorCPFOK()

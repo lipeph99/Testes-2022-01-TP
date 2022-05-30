@@ -4,7 +4,7 @@ class Banco:
     def __init__(self):
         self.contas = []
 
-    def achaConta(self, _id):
+    def encontrarContaPorId(self, _id):
         pos = -1
         i = 0
         while (i < len(self.contas)):
@@ -14,14 +14,34 @@ class Banco:
             i = i+1
         return pos
 
+    def encontrarContaPorCPF(self, cpf):
+        pos = -1
+        i = 0
+        while (i < len(self.contas)):
+            if self.contas[i].cpf == cpf:
+                pos = i
+                break
+            i = i+1
+        return pos
+
     def criaConta(self, _id, saldo, nome, cpf):
-        pos = self.achaConta(_id)
-        if(pos == -1):
+        pos = self.encontrarContaPorId(_id)
+        pos_cpf = self.encontrarContaPorCPF(cpf)
+        if(pos == -1 and pos_cpf == -1):
+            if saldo < 0:
+                return "Saldo inicial inválido"
+            if nome == "":
+                return "Nome não pode estar vazio"
+            if cpf == "" or len(cpf) > 10:
+                return "CPF inválido"
             conta = Conta(_id, saldo, nome, cpf)
             self.contas.append(conta)
             return "Conta criada"
         else:
-            return "Já existe uma conta com esse id"
+            if pos == 0:
+                return "Já existe uma conta com esse id"
+            if pos_cpf == 0:
+                return "Já existe uma conta com esse cpf"
 
     def printaTodasContas(self):
         i = 0
@@ -36,7 +56,7 @@ class Banco:
         return contas
 
     def deletaConta(self, _id):
-        pos = self.achaConta(_id)
+        pos = self.encontrarContaPorId(_id)
         if(pos == -1):
             return "Conta não encontrada"
         elif(self.contas[pos].saldo != 0):
@@ -46,21 +66,21 @@ class Banco:
             return "conta " + _id + " deletada"
 
     def printaConta(self, _id):
-        pos = self.achaConta(_id)
+        pos = self.encontrarContaPorId(_id)
         if(pos == -1):
             return "Conta não encontrada"
         else:
             return "id: " + self.contas[pos].id + " | saldo: " + str(self.contas[pos].saldo) + " | nome: " + self.contas[pos].nome
 
     def getNome(self, _id):
-        pos = self.achaConta(_id)
+        pos = self.encontrarContaPorId(_id)
         if(pos == -1):
             return "Conta não encontrada"
         else:
             return "nome: " + self.contas[pos].nome
 
     def setNome(self, _id, _nome):
-        pos = self.achaConta(_id)
+        pos = self.encontrarContaPorId(_id)
         if(pos == -1):
             return "Conta não encontrada"
         else:
@@ -68,14 +88,14 @@ class Banco:
             return "nome da conta " + self.contas[pos].id + " alterado para " + self.contas[pos].nome
 
     def getCPF(self, _id):
-        pos = self.achaConta(_id)
+        pos = self.encontrarContaPorId(_id)
         if(pos == -1):
             return "Conta não encontrada"
         else:
             return self.contas[pos].cpf
 
     def setCPF(self, _id, _cpf):
-        pos = self.achaConta(_id)
+        pos = self.encontrarContaPorId(_id)
         if(pos == -1):
             return "Conta não encontrada"
         else:
@@ -83,7 +103,7 @@ class Banco:
             return "CPF da conta " + self.contas[pos].id + " alterado para " + self.contas[pos].cpf
 
     def adicionaSaldo(self, _id, valor):
-        pos = self.achaConta(_id)
+        pos = self.encontrarContaPorId(_id)
         if(pos == -1):
             return "Conta não encontrada"
 
@@ -94,14 +114,14 @@ class Banco:
         return "Saldo adicionado com sucesso!"
 
     def getSaldo(self, _id):
-        pos = self.achaConta(_id)
+        pos = self.encontrarContaPorId(_id)
         if(pos == -1):
             return "Conta não encontrada"
 
         return "O valor do saldo é: " + str(self.contas[pos].saldo)
 
     def saque(self, _id, valor):
-        pos = self.achaConta(_id)
+        pos = self.encontrarContaPorId(_id)
         if(pos == -1):
             return "Conta não encontrada"
         if(valor <= 0):
@@ -115,11 +135,10 @@ class Banco:
     def transferencia(self, _idOrigem, _idDestino, valor):
         if(valor <= 0):
             return "Valor inválido para transferência!"
-
-        origem = self.achaConta(_idOrigem)
+        origem = self.encontrarContaPorId(_idOrigem)
         if(origem == -1):
             return "Conta de origem não encontrada"
-        destino = self.achaConta(_idDestino)
+        destino = self.encontrarContaPorId(_idDestino)
         if(destino == -1):
             return "Conta de destino não encontrada"
         if(self.contas[int(_idOrigem)].saldo < valor):
@@ -132,13 +151,13 @@ class Banco:
         return "Transferência de " + str(valor) + " a realizada da conta " + str(_idOrigem) + " para a conta " + str(_idDestino)
 
     def getIdade(self, _id):
-        pos = self.achaConta(_id)
+        pos = self.encontrarContaPorId(_id)
         if(pos == -1):
             return "Conta não encontrada"
         return self.contas[pos].idade
 
     def setIdade(self, _id, _idade):
-        pos = self.achaConta(_id)
+        pos = self.encontrarContaPorId(_id)
         if(pos == -1):
             return "Conta não encontrada"
         if(_idade < 0):
