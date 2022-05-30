@@ -139,7 +139,7 @@ class Banco:
         if(_idade<18):
             return "Contas apenas para maiores"
         self.contas[pos].idade = _idade
-        return "Idade da conta " + self.contas[pos].id + "definida como " + self.contas[pos].idade
+        return "Idade da conta " + self.contas[pos].id + " definida como " + str(self.contas[pos].idade)
 
 class Conta:
     def __init__(self, id, saldo, nome, cpf):

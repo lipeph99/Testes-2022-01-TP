@@ -173,6 +173,41 @@ def test_transferenciaExcedeSaldo():
 
 
 """
+Testes Idade
+"""
+def test_getIdadeOK():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    banco.setIdade('1', 20)
+    assert banco.getIdade('1') == 20
+
+def test_getIdadeContaNaoEncontrada():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.getIdade('2') == "Conta não encontrada"
+
+def test_setIdadeOK():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.setIdade('1', 20) == "Idade da conta 1 definida como 20"
+
+def test_setIdadeContaNaoEncontrada():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.setIdade('2', 20) == "Conta não encontrada"
+
+def test_setIdadeNumeroInvalido():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.setIdade('1', -20) == "Número inválido"
+
+def test_setIdadeMenorDeIdade():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.setIdade('1', 17) == "Contas apenas para maiores"
+
+
+"""
 HUB
 """
 def testHub():
@@ -194,3 +229,7 @@ def testHub():
     test_saqueOK()
     test_transferenciaOK()
     test_transferenciaSemContaOrigem()
+    test_transferenciaSemContaDestino()
+    test_transferenciaExcedeSaldo()
+    test_getIdadeOK()
+    test_getIdadeContaNaoEncontrada()
