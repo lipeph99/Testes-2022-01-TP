@@ -2,7 +2,13 @@
 Trabalho desenvolvido para Testes de Software - UFMG DCC
 
 ## Grupo
+Bruna Campos de Melo - 2018055121
+
 Clarisse Scofield - 2018054699
+
+Luis Henrique Soares Monteiro - 2018054583
+
+Philippe Santos Silva - 2015004429
 
 ## Sobre o projeto
 O sistema desenvolvido é voltado para uma simulação de um banco digital, capaz de realizar as principais funcionalidades de todo banco. Dentre elas, cita-se:
