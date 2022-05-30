@@ -150,6 +150,27 @@ def test_transferenciaOK():
     banco.deletaConta('1')
     banco.deletaConta('2')
 
+def test_transferenciaSemContaOrigem():
+    banco = Banco()
+    banco.criaConta('1', 0, 'Bruna', '123456')
+    banco.criaConta('2', 0, 'João', '123456123')
+    banco.adicionaSaldo('1', 60)
+    assert  banco.transferencia('3', '1', 30) == "Conta de origem não encontrada"
+
+def test_transferenciaSemContaDestino():
+    banco = Banco()
+    banco.criaConta('1', 0, 'Bruna', '123456')
+    banco.criaConta('2', 0, 'João', '123456123')
+    banco.adicionaSaldo('1', 60)
+    assert  banco.transferencia('1', '3', 30) == "Conta de destino não encontrada"
+
+def test_transferenciaExcedeSaldo():
+    banco = Banco()
+    banco.criaConta('1', 0, 'Bruna', '123456')
+    banco.criaConta('2', 0, 'João', '123456123')
+    banco.adicionaSaldo('1', 60)
+    assert  banco.transferencia('1', '2', 120) == "Valor para transferência excede saldo na conta!"
+
 
 """
 HUB
@@ -172,3 +193,4 @@ def testHub():
     test_setSaldoErrado()
     test_saqueOK()
     test_transferenciaOK()
+    test_transferenciaSemContaOrigem()
