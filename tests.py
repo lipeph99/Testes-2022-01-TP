@@ -219,6 +219,31 @@ def test_setIdadeMenorDeIdade():
 
 
 """
+Testes Printar Conta
+"""
+def test_printaContaOK():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.printaConta('1') == "id: 1 | saldo: 1000 | nome: Bruna"
+    banco.deletaConta('1')
+
+def test_printaContaNaoEncontrada():
+    banco = Banco()
+    assert banco.printaConta('2') == "Conta não encontrada"
+
+"""
+Testes Printar Todas as contas
+"""
+def test_printaContasBancoSemContas():
+    banco = Banco()
+    assert banco.printaTodasContas() == "Esse banco ainda não possui contas"
+
+def test_printaContasOK():
+    banco = Banco()
+    banco.criaConta('1', 1000, 'Bruna', '123456')
+    assert banco.printaTodasContas() == "id: 1 nome: Bruna CPF: 123456 saldo: 1000"
+    banco.deletaConta('1')
+"""
 HUB
 """
 def testHub():
@@ -248,3 +273,7 @@ def testHub():
     test_setIdadeContaNaoEncontrada()
     test_setIdadeMenorDeIdade()
     test_setIdadeNumeroInvalido()
+    test_printaContaNaoEncontrada()
+    test_printaContaOK()
+    test_printaContasBancoSemContas()
+    test_printaContasOK()

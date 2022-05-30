@@ -25,10 +25,13 @@ class Banco:
 
     def printaTodasContas(self):
         i = 0
+        contas = ""
+        if(len(self.contas) == 0):
+            return "Esse banco ainda não possui contas"
         while (i < len(self.contas)):
-            print("id: " + self.contas[i].id + " nome: " + self.contas[i].nome + " CPF: " + self.contas[i].cpf + " saldo: " + str(self.contas[i].saldo) )
+            contas += "id: " + self.contas[i].id + " nome: " + self.contas[i].nome + " CPF: " + self.contas[i].cpf + " saldo: " + str(self.contas[i].saldo)
             i = i+1
-        return
+        return contas
 
     def deletaConta(self, _id):
         pos = self.achaConta(_id)
