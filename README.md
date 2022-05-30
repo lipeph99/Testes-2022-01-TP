@@ -24,7 +24,8 @@ O sistema desenvolvido é voltado para uma simulação de um banco digital, capa
 10. Ver saldo
 11. Deletar conta
 12. Ver info da conta 
-Entre outros.
+
+Entre outras funcionalidades.
 
 ## Para executar
 O sistema pode ser executado no terminal do projeto com o comando:
