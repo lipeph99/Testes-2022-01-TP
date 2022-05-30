@@ -19,7 +19,7 @@ def main():
         print("8 - Ver nome de conta")
         print("9 - Ver CPF de conta")
         print("10- Ver Saldo")
-        print("11- Deleta conta")
+        print("11- Deletar conta")
         print("12- Ver infos da conta")
         print("13- Definir idade")
         print("14- Ver idade")
