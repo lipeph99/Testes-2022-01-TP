@@ -17,6 +17,12 @@ class Banco:
     def criaConta(self, _id, saldo, nome, cpf):
         pos = self.achaConta(_id)
         if(pos == -1):
+            if saldo < 0:
+                return "Saldo inicial inválido"
+            if nome == "":
+                return "Nome não pode estar vazio"
+            if cpf == "" or len(cpf) > 10:
+                return "CPF inválido"
             conta = Conta(_id, saldo, nome, cpf)
             self.contas.append(conta)
             return "Conta criada"
