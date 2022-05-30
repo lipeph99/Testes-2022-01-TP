@@ -153,16 +153,18 @@ def test_transferenciaOK():
 def test_transferenciaSemContaOrigem():
     banco = Banco()
     banco.criaConta('1', 0, 'Bruna', '123456')
-    banco.criaConta('2', 0, 'João', '123456123')
     banco.adicionaSaldo('1', 60)
     assert  banco.transferencia('3', '1', 30) == "Conta de origem não encontrada"
+    banco.saque('1',60)
+    banco.deletaConta('1')
 
 def test_transferenciaSemContaDestino():
     banco = Banco()
     banco.criaConta('1', 0, 'Bruna', '123456')
-    banco.criaConta('2', 0, 'João', '123456123')
     banco.adicionaSaldo('1', 60)
     assert  banco.transferencia('1', '3', 30) == "Conta de destino não encontrada"
+    banco.saque('1', 60)
+    banco.deletaConta('1')
 
 def test_transferenciaExcedeSaldo():
     banco = Banco()
@@ -170,6 +172,9 @@ def test_transferenciaExcedeSaldo():
     banco.criaConta('2', 0, 'João', '123456123')
     banco.adicionaSaldo('1', 60)
     assert  banco.transferencia('1', '2', 120) == "Valor para transferência excede saldo na conta!"
+    banco.saque('1',60)
+    banco.deletaConta('1')
+    banco.deletaConta('2')
 
 
 """
@@ -180,31 +185,37 @@ def test_getIdadeOK():
     banco.criaConta('1', 1000, 'Bruna', '123456')
     banco.setIdade('1', 20)
     assert banco.getIdade('1') == 20
+    banco.deletaConta('1')
 
 def test_getIdadeContaNaoEncontrada():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.getIdade('2') == "Conta não encontrada"
+    banco.deletaConta('1')
 
 def test_setIdadeOK():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.setIdade('1', 20) == "Idade da conta 1 definida como 20"
+    banco.deletaConta('1')
 
 def test_setIdadeContaNaoEncontrada():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.setIdade('2', 20) == "Conta não encontrada"
+    banco.deletaConta('1')
 
 def test_setIdadeNumeroInvalido():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.setIdade('1', -20) == "Número inválido"
+    banco.deletaConta('1')
 
 def test_setIdadeMenorDeIdade():
     banco = Banco()
     banco.criaConta('1', 1000, 'Bruna', '123456')
     assert banco.setIdade('1', 17) == "Contas apenas para maiores"
+    banco.deletaConta('1')
 
 
 """
@@ -233,3 +244,7 @@ def testHub():
     test_transferenciaExcedeSaldo()
     test_getIdadeOK()
     test_getIdadeContaNaoEncontrada()
+    test_setIdadeOK()
+    test_setIdadeContaNaoEncontrada()
+    test_setIdadeMenorDeIdade()
+    test_setIdadeNumeroInvalido()
