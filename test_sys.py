@@ -29,5 +29,37 @@ def test_system_umaContaOk():
     assert banco.saque('1', 10) == "Saque de 10 reais realizado com sucesso!"
     assert banco.deletaConta('1') == "conta 1 deletada"
 
+def test_system_umaContaMultiplosErros():
+    banco = Banco()
+    assert banco.printaTodasContas() == "Esse banco ainda não possui contas"
+    assert banco.printaConta('1') == "Conta não encontrada"
+    assert banco.criaConta('1', -1, 'João', '123') == "Saldo inicial inválido"
+    assert banco.criaConta('1', 10, '', '123') == "Nome não pode estar vazio"
+    assert banco.criaConta('1', 10, 'João', '') == "CPF inválido"
+    assert banco.criaConta('1', 10, 'João', '123') == "Conta criada"
+    assert banco.deletaConta('1') == "Conta ainda tem saldo"
+    assert banco.deletaConta('2') == "Conta não encontrada"
+    assert banco.getNome('2') == "Conta não encontrada"
+    assert banco.setNome('2', 'Joãozinho') == "Conta não encontrada"
+    assert banco.getCPF('2') == "Conta não encontrada"
+    assert banco.setCPF('2', '234') == "Conta não encontrada"
+    assert banco.adicionaSaldo('2', 20) == "Conta não encontrada"
+    assert banco.adicionaSaldo('1', -20) == "Valor inválido!"
+    assert banco.getSaldo('2') == "Conta não encontrada"
+    assert banco.saque('2', 1) == "Conta não encontrada"
+    assert banco.saque('1', -1) == "Valor inválido para saque!"
+    assert banco.saque('1', 40) == "Valor para saque excede saldo na conta!"
+    assert banco.getIdade('2') == "Conta não encontrada"
+    assert banco.setIdade('2', 20) == "Conta não encontrada"
+    assert banco.setIdade('1', -20) == "Número inválido"
+    assert banco.setIdade('1', 2) == "Contas apenas para maiores"
+    assert banco.deletaConta('2') == "Conta não encontrada"
+    assert banco.deletaConta('1') == "Conta ainda tem saldo"
+    assert banco.criaConta('1', 0, 'Maria', '234') == "Já existe uma conta com esse id"
+    assert banco.criaConta('2', 0, 'Maria', '123') == "Já existe uma conta com esse cpf"
+    assert banco.saque('1', 10) == "Saque de 10 reais realizado com sucesso!"
+    assert banco.deletaConta('1') == "conta 1 deletada"
+
 def testHub():
     test_system_umaContaOk()
+    test_system_umaContaMultiplosErros()
