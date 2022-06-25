@@ -26,6 +26,7 @@ def test_system_umaContaOk():
     assert banco.getIdade('1') == 20
     assert banco.printaConta('1') == "id: 1 | saldo: 10 | nome: Joãozinho"
     assert banco.printaTodasContas() == "id: 1 nome: Joãozinho CPF: 234 saldo: 10"
+    assert banco.saque('1', 10) == "Saque de 10 reais realizado com sucesso!"
     assert banco.deletaConta('1') == "conta 1 deletada"
 
 def testHub():
