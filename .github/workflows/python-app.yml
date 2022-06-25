@@ -40,7 +40,7 @@ jobs:
     - name: Generate Report
       run: |
         pip install coverage
-        coverage run -m pytest tests.py
+        coverage run -m pytest test_sys.py
         coverage report -m
     - name: Upload coverage reports to Codecov
       run: |
