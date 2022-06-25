@@ -141,14 +141,14 @@ class Banco:
         destino = self.encontrarContaPorId(_idDestino)
         if(destino == -1):
             return "Conta de destino não encontrada"
-        if(self.contas[int(_idOrigem)].saldo < valor):
+        if(self.contas[int(_idOrigem) - 1].saldo < valor):
             return "Valor para transferência excede saldo na conta!"
 
         self.contas[int(_idOrigem) -
                     1].saldo = self.contas[int(_idOrigem) - 1].saldo - valor
         self.contas[int(_idDestino) -
                     1].saldo = self.contas[int(_idDestino)-1].saldo + valor
-        return "Transferência de " + str(valor) + " a realizada da conta " + str(_idOrigem) + " para a conta " + str(_idDestino)
+        return "Transferência de " + str(valor) + " realizada da conta " + str(_idOrigem) + " para a conta " + str(_idDestino)
 
     def getIdade(self, _id):
         pos = self.encontrarContaPorId(_id)
