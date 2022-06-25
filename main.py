@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
-from tests import testHub
+from test_sys import testHub
 from banco import Banco
 
 

@@ -174,3 +174,4 @@ class Conta:
         self.saldo = saldo
         self.nome = nome
         self.cpf = cpf
+        self.idade = 0
